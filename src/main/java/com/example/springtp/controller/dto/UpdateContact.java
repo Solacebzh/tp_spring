@@ -1,15 +1,12 @@
-package com.example.springtp.repository.entity;
+package com.example.springtp.controller.dto;
 
-import javax.persistence.*;
+import com.example.springtp.repository.entity.Contact;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDate;
-import java.util.Collection;
 
-@Entity
-public class Contact {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class UpdateContact {
     private Long id;
-
     private String firstName;
 
     private String lastName;
@@ -24,26 +21,26 @@ public class Contact {
 
     private LocalDate birthday;
 
-    private String note;
-
     private String pictureUrl;
 
-    @OneToMany(mappedBy = "contactParent", fetch = FetchType.EAGER)
-    private Collection<FamilleContact> relationContactsById;
+    private String note;
 
-    @ManyToOne
-    @JoinColumn(name = "userParent_id", referencedColumnName = "id")
-    private User userParent;
-
-    public Contact() {
+    public UpdateContact() {
     }
 
-    public String getPictureUrl() {
-        return pictureUrl;
-    }
-
-    public void setPictureUrl(String pictureUrl) {
-        this.pictureUrl = pictureUrl;
+    public Contact toContact(){
+        Contact c = new Contact();
+        c.setId(this.id);
+        c.setFirstName(this.firstName);
+        c.setLastName(this.lastName);
+        c.setBirthday(this.birthday);
+        c.setCompany(this.company);
+        c.setFunction(this.function);
+        c.setEmail(this.email);
+        c.setNote(this.note);
+        c.setPhoneNumber(this.phoneNumber);
+        c.setPictureUrl(this.pictureUrl);
+        return c;
     }
 
     public Long getId() {
@@ -52,6 +49,14 @@ public class Contact {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getPictureUrl() {
+        return pictureUrl;
+    }
+
+    public void setPictureUrl(String pictureUrl) {
+        this.pictureUrl = pictureUrl;
     }
 
     public String getFirstName() {
